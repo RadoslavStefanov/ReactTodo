@@ -1,5 +1,10 @@
-export default function Todos()
+export default function Todos
+(
+    { todos, toggleToDoStatus }
+)
+
 {
+    console.log(todos)
     return(
         <table className="table">
               <thead>
@@ -11,13 +16,16 @@ export default function Todos()
               </thead>
               <tbody>
 
-                <tr className="todo is-completed">
-                  <td>Give dog a bath</td>
-                  <td>Complete</td>
-                  <td className="todo-action">
-                    <button className="btn todo-btn">Change status</button>
-                  </td>
-                </tr>
+                {todos.map(todo =>(
+                    <tr key={todo._id} className={`todo${todo.isCompleted ? " is-completed" : ""}`}>
+                        <td>{todo.text}</td>
+                        <td>{todo.isCompleted ? 'Completed' : 'In progress'}</td>
+                        <td className="todo-action">
+                            <button className="btn todo-btn" onClick={() => toggleToDoStatus(todo._id)}>Change status</button>
+                        </td>
+                    </tr>
+                    ))
+                }
                 
               </tbody>
             </table>
