@@ -8,12 +8,14 @@ import Todos from "./components/Todos";
 function App() 
 {
   const [todos, setTodos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect( () => {
     fetch ('http://localhost:3030/jsonstore/todos')
     .then(res => res.json())
     .then(data => {
         setTodos(Object.values(data));
+        setIsLoading(false);
       })
   }, []);
 
@@ -46,11 +48,15 @@ function App()
 
           <div className="table-wrapper">
 
-            {/* <Loading/> */}
-            <Todos 
-              todos={todos} 
-              toggleToDoStatus = {toggleToDoStatus}
-            />
+            {
+              isLoading == true ? 
+                <Loading/> : 
+                <Todos 
+                  todos={todos} 
+                  toggleToDoStatus = {toggleToDoStatus}
+                />
+            }
+            
 
           </div>
         </section>
